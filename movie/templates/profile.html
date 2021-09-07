@@ -9,33 +9,32 @@
     <h3>school grade: {{user.school_grade}}</h3>
     <p>password: {{user.password}}</p>
     <br/>
-    <a href="/profiles/update/{{user.id}}" id="{{user.id}}">更新</a>
+    <a href="/profiles/update/{{user.id}}" id="{{user.id}}">Update</a>
 </div>
 
-<!-- 先引入jquery，下面要用到-->
+<!-- import jquery-->
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-<!--发送ajax请求删除课程 -->
+<!--Send an Ajax request to delete the userid -->
 <script type="text/javascript">
     $('a.btn-delete').on('click',function(evt){
-        // 通知浏览器不要执行与事件关联的默认动作
         evt.preventDefault();
-        // 获取课程ID
+        // get ID of user
         var userid = $(this).attr('id');
         $.ajax({
-            // 请求URL
+            // request URL
             url: "/profiles/" + userid,
-            // 请求方法类型
+            // type of reuest
             type: "DELETE",
             contentType:"application/json",
-            // 删除成功响应函数
+            // Response function when delete successfully
             success:function(resp){
-                // 在当前页面打开课程列表页面
+                // Open profile on the current page
                 window.open("/profiles","_self");
             },
-            // 删除失败响应函数
+            // Response function when delete failed
             error:function(resp){
-                // 删除失败，给出错误提示
-                alert("删除课程失败！详情：" + resp.message);
+                // alert when delete failed
+                alert("delete failed！detail：" + resp.message);
             }
         })
     });
